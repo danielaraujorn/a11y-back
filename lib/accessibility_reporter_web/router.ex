@@ -48,8 +48,6 @@ defmodule AccessibilityReporterWeb.Router do
   scope "/api/v1", AccessibilityReporterWeb do
     pipe_through [:api_v1]
 
-    post "/users/confirmation", UserConfirmationController, :create
-    # post?
     get "/users/confirmation/:token", UserConfirmationController, :update
 
     get "/places", PlaceController, :index
@@ -60,32 +58,27 @@ defmodule AccessibilityReporterWeb.Router do
   end
 
   scope "/api/v1", AccessibilityReporterWeb do
-    pipe_through [:api_v1, :require_authenticated_user]
-
-    get "/users/own", UserController, :own
-    patch "/users/settings/email", UserSettingsController, :update_email
-    patch "/users/settings/password", UserSettingsController, :update_password
-    get "/users/settings/email_confirmation/:token", UserSettingsController, :confirm_email
-    delete "/users/log_out", UserSessionController, :log_out
-  end
-
-  scope "/api/v1", AccessibilityReporterWeb do
     pipe_through [:api_v1, :require_authenticated_user, :require_admin_user]
 
     get "/users", UserController, :index
     get "/users/:id", UserController, :show
     patch "/users/:id/role", UserController, :update_role
+
+    post "/deficiencies", DeficiencyController, :create
+    patch "/deficiencies/:id", DeficiencyController, :update
+    delete "/deficiencies/:id", DeficiencyController, :delete
   end
 
   scope "/api/v1", AccessibilityReporterWeb do
     pipe_through [:api_v1, :require_authenticated_user]
 
+    get "/users/own", UserController, :own
+    delete "/users/log_out", UserSessionController, :log_out
+    # patch "/users/settings/email", UserSettingsController, :update_email
+    # patch "/users/settings/password", UserSettingsController, :update_password
+
     post "/places", PlaceController, :create
     patch "/places/:id", PlaceController, :update
     delete "/places/:id", PlaceController, :delete
-
-    post "/deficiencies", DeficiencyController, :create
-    patch "/deficiencies/:id", DeficiencyController, :update
-    delete "/deficiencies/:id", DeficiencyController, :delete
   end
 end
