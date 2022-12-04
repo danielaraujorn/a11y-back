@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: kartoza/postgis
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      # If you need to create multiple database you can add coma separated databases eg gis,data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /var/lib/postgresql/data1
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    ports:
+      - 5432:5432
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@email.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+    networks:
+      - postgres-compose-network
+
+volumes:
+  postgres:
+
+networks:
+  postgres-compose-network:
+    driver: bridge
