@@ -42,9 +42,7 @@ Response:
         "status": "inProgress",
         "updated_at": "2022-01-01T21:32:35",
         "validator_comments": "Comentários do validador",
-        "deficiencies": [
-          "b77468f5-6630-4ce6-b1ee-085937c8e0de"
-        ],
+        "deficiencies": ["b77468f5-6630-4ce6-b1ee-085937c8e0de"],
         "barrier_level": 1
       }
     ]
@@ -72,9 +70,7 @@ Response:
     "description": "description",
     "inserted_at": "2022-01-01T20:57:36",
     "updated_at": "2022-01-01T20:57:36",
-    "deficiencies": [
-      "b77468f5-6630-4ce6-b1ee-085937c8e0de"
-    ],
+    "deficiencies": ["b77468f5-6630-4ce6-b1ee-085937c8e0de"],
     "barrier_level": 1
   }
 }
@@ -92,7 +88,7 @@ Body Params:
 
 ```txt
 description="Nome lugar" - text - required
-status="inProgress" - text - ["inProgress", "validated", "needChanges"] - required
+status="inProgress" - text - ["inProgress", "validated", "needChanges", "invalidated"] - required
 latitude="1" - text - required
 longitude="1" - text - required
 validator_comments="Comentários do validador" - text - optional

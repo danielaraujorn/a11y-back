@@ -22,7 +22,7 @@ defmodule AccessibilityReporter.Places do
 
     query =
       Place
-      |> get_by_user_role_or_status(user, params)
+      |> get_by_user_role_or_status(user)
       |> get_by_statuses(params)
       |> get_by_location(params)
 
@@ -68,7 +68,7 @@ defmodule AccessibilityReporter.Places do
   def get(id, user) do
     Place
     |> where(id: ^id)
-    |> get_by_user_role(user)
+    |> get_by_user_role_or_status(user)
     |> Repo.one()
     |> Repo.preload(:deficiencies)
   end
@@ -165,27 +165,12 @@ defmodule AccessibilityReporter.Places do
     end
   end
 
-  defp get_by_user_role_or_status(query, user, params) do
-    mine = Map.get(params, :mine, false)
-
+  defp get_by_user_role_or_status(query, user) do
     cond do
-      mine === true ->
-        where(query, user_id: ^user.id)
-
       user.role == :normal ->
-        where(query, [p], p.status == :validated or p.user_id == ^user.id)
+        where(query, [p], p.status == :validated or (p.user_id == ^user.id and p.status != :invalidated))
 
       true ->
-        query
-    end
-  end
-
-  defp get_by_user_role(query, user) do
-    case user do
-      %{role: :normal} ->
-        where(query, status: :validated)
-
-      _ ->
         query
     end
   end

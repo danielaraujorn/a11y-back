@@ -12,7 +12,7 @@ defmodule AccessibilityReporter.Places.Schema.Place do
 
   schema "places" do
     field :description, :string
-    field :status, Ecto.Enum, values: [:inProgress, :validated, :needChanges]
+    field :status, Ecto.Enum, values: [:inProgress, :validated, :needChanges, :invalidated]
     field :image, PlaceImage.Type
     field :location, Geo.PostGIS.Geometry
     field :validator_comments, :string

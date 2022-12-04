@@ -7,7 +7,7 @@ defmodule AccessibilityReporter.Repo.Migrations.AddStatusForPlaces do
     execute(
       """
       CREATE TYPE #{@type_name}
-        AS ENUM ('inProgress','validated','needChanges')
+        AS ENUM ('inProgress','validated','needChanges','invalidated')
       """,
       "DROP TYPE #{@type_name}"
     )

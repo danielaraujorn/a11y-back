@@ -13,13 +13,14 @@ import Ecto.Changeset
 
 alias AccessibilityReporter.Repo
 alias AccessibilityReporter.Accounts.Schema.User
+alias AccessibilityReporter.Deficiencies.Schema.Deficiency
 
 Repo.delete_all(User)
 
 %User{role: :admin}
 |> User.registration_changeset(%{
   email: "admin@email.com",
-  password: "@Admin12345"
+  password: "@Senha12345"
 })
 |> put_change(:confirmed_at, NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
 |> Repo.insert!()
@@ -27,15 +28,37 @@ Repo.delete_all(User)
 %User{role: :validator}
 |> User.registration_changeset(%{
   email: "validator@email.com",
-  password: "@Validator12345"
+  password: "@Senha12345"
 })
 |> put_change(:confirmed_at, NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
 |> Repo.insert!()
 
 %User{role: :normal}
 |> User.registration_changeset(%{
-  email: "normal@email.com",
-  password: "@Normal12345"
+  email: "normal1@email.com",
+  password: "@Senha12345"
 })
 |> put_change(:confirmed_at, NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
+|> Repo.insert!()
+
+%User{role: :normal}
+|> User.registration_changeset(%{
+  email: "normal2@email.com",
+  password: "@Senha12345"
+})
+|> put_change(:confirmed_at, NaiveDateTime.truncate(NaiveDateTime.utc_now(), :second))
+|> Repo.insert!()
+
+%Deficiency{}
+|> Deficiency.save_changeset(%{
+  name: "Dificuldade na locomoção",
+  description: "Dificuldade na locomoção"
+})
+|> Repo.insert!()
+
+%Deficiency{}
+|> Deficiency.save_changeset(%{
+  name: "Baixa visão",
+  description: "Baixa visão"
+})
 |> Repo.insert!()
